@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import CrudOperation from "../services/CrudOperation";
 
-const AddUser = ({ openAddUser, setOpenAddUser }) => {
+const AddUser = ({ openAddUser, setOpenAddUser, getUsers }) => {
   // Handle form submit
   const handleAddUser = async (e) => {
     e.preventDefault();
@@ -27,6 +27,9 @@ const AddUser = ({ openAddUser, setOpenAddUser }) => {
       await CrudOperation.addUser(formData);
       toast.success("User Added Successfully");
       form.reset();
+      setOpenAddUser(false);
+
+      getUsers();
     } catch (err) {
       toast.error(err.message);
     }

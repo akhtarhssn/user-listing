@@ -1,4 +1,68 @@
-const EditUser = ({ openModal, setOpenModal }) => {
+import { useEffect, useState } from "react";
+import CrudOperation from "../services/CrudOperation";
+import toast from "react-hot-toast";
+
+const EditUser = ({ openModal, setOpenModal, id, setUserId, getUsers }) => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    department: "",
+    city: "",
+    employment: "",
+  });
+
+  useEffect(() => {
+    if (id !== undefined && id !== "") {
+      const handleUserData = async () => {
+        try {
+          const userData = await CrudOperation.getUserById(id);
+          setUser(userData.data());
+        } catch (err) {
+          toast.error(err.message);
+        }
+      };
+      handleUserData();
+    }
+  }, [id]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    e.preventDefault();
+
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const phone = form.phone.value;
+    const department = form.department.value;
+    const city = form.city.value;
+    const employment = form.employment.value;
+
+    const formData = {
+      name,
+      email,
+      phone,
+      department,
+      city,
+      employment,
+    };
+
+    if (id !== undefined && id !== "") {
+      try {
+        await CrudOperation.updateUser(id, formData);
+        toast.success("User Updated Successfully");
+        form.reset();
+        setOpenModal(false);
+        setUserId("");
+
+        getUsers();
+      } catch (err) {
+        toast.error(err.message);
+      }
+    }
+  };
+
   return (
     <div
       className={`fixed top-0 left-0 w-screen bg-opacity-50 bg-gray-700 ${
@@ -10,13 +74,13 @@ const EditUser = ({ openModal, setOpenModal }) => {
       <div className="relative max-w-2xl mx-auto h-screen flex items-center justify-center">
         {/* Modal content  */}
         <form
-          action="#"
+          onSubmit={handleSubmit}
           className="relative bg-white rounded-lg shadow dark:bg-gray-700"
         >
           {/* Modal header  */}
           <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              Edit user
+              Update a User
             </h3>
             <button
               type="button"
@@ -47,18 +111,19 @@ const EditUser = ({ openModal, setOpenModal }) => {
             <div className="grid grid-cols-6 gap-6">
               <div className="col-span-6 sm:col-span-3">
                 <label
-                  htmlFor="first-name"
+                  htmlFor="name"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Name
                 </label>
                 <input
                   type="text"
-                  name="first-name"
-                  id="first-name"
+                  name="name"
+                  id="name"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Bonnie"
-                  required=""
+                  required={true}
+                  defaultValue={user.name}
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
@@ -74,23 +139,25 @@ const EditUser = ({ openModal, setOpenModal }) => {
                   id="email"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="example@company.com"
-                  required=""
+                  required={true}
+                  defaultValue={user.email}
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
                 <label
-                  htmlFor="phone-number"
+                  htmlFor="phone"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Phone Number
                 </label>
                 <input
                   type="number"
-                  name="phone-number"
-                  id="phone-number"
+                  name="phone"
+                  id="phone"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="e.g. +(12)3456 789"
-                  required=""
+                  required={true}
+                  defaultValue={user.phone}
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
@@ -106,7 +173,8 @@ const EditUser = ({ openModal, setOpenModal }) => {
                   id="department"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Development"
-                  required=""
+                  required={true}
+                  defaultValue={user.department}
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
@@ -122,7 +190,8 @@ const EditUser = ({ openModal, setOpenModal }) => {
                   id="city"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="123456"
-                  required=""
+                  required={true}
+                  defaultValue={user.city}
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
@@ -133,13 +202,19 @@ const EditUser = ({ openModal, setOpenModal }) => {
                   Employment Status
                 </label>
                 <select
-                  id="countries"
+                  id="employment"
+                  name="employment"
+                  required={true}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={(e) => {
+                    setUser({ ...user, employment: e.target.value });
+                  }}
+                  value={user.employment}
                 >
-                  <option defaultValue>Choose an option</option>
-                  <option value="US">Employed</option>
-                  <option value="CA">Un Employed</option>
-                  <option value="FR">Freelancer</option>
+                  <option disabled>Choose an option</option>
+                  <option value="Employed">Employed</option>
+                  <option value="Unemployed">Unemployed</option>
+                  <option value="Freelancer">Freelancer</option>
                 </select>
               </div>
             </div>

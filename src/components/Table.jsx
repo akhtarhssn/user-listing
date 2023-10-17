@@ -4,22 +4,32 @@ import EditUser from "./EditUser";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import CrudOperation from "../services/CrudOperation";
 import UserRow from "./UserRow";
-import { TbTrashOff } from "react-icons/tb";
+import toast from "react-hot-toast";
 
 const Table = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openAddUser, setOpenAddUser] = useState(false);
   const [users, setUsers] = useState([]);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    const getUsers = async () => {
-      const data = await CrudOperation.getAllUsers();
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
     getUsers();
   }, []);
 
-  console.log(users);
+  const getUsers = async () => {
+    const data = await CrudOperation.getAllUsers();
+    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+
+  const deleteHandler = async (id) => {
+    await CrudOperation.deleteUser(id);
+    toast.success("User Deleted Successfully");
+    getUsers();
+  };
+
+  const userIdHandler = (id) => {
+    setUserId(id);
+  };
 
   return (
     <>
@@ -32,14 +42,18 @@ const Table = () => {
             </span>
           </h1>
           <button
-            className="bg-white py-3 px-8 rounded flex items-center gap-2"
+            className="bg-white py-3 px-8 rounded flex items-center gap-2 font-bold group"
             onClick={() => {
               setOpenAddUser(!openAddUser);
               setOpenModal(false);
             }}
           >
             {" "}
-            <AiOutlinePlusCircle size={20} /> Add New User
+            Add New User{" "}
+            <AiOutlinePlusCircle
+              size={20}
+              className="group-hover:scale-125 duration-500 group-hover:text-green-700"
+            />
           </button>
         </div>
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -64,24 +78,40 @@ const Table = () => {
                 City
               </th>
               <th scope="col" className="px-6 py-3">
+                Edit User
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Delete
               </th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {users.map((user, index) => (
               <UserRow
                 key={user.id}
                 setOpenModal={setOpenModal}
                 setOpenAddUser={setOpenAddUser}
                 user={user}
+                index={index}
+                deleteHandler={deleteHandler}
+                getUserId={userIdHandler}
               />
             ))}
           </tbody>
         </table>
       </div>
-      <EditUser openModal={openModal} setOpenModal={setOpenModal} />
-      <AddUser openAddUser={openAddUser} setOpenAddUser={setOpenAddUser} />
+      <EditUser
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        id={userId}
+        setUserId={setUserId}
+        getUsers={getUsers}
+      />
+      <AddUser
+        openAddUser={openAddUser}
+        setOpenAddUser={setOpenAddUser}
+        getUsers={getUsers}
+      />
     </>
   );
 };

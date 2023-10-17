@@ -1,42 +1,55 @@
 import React from "react";
+import { TbTrashOff } from "react-icons/tb";
+import { BiSolidEdit } from "react-icons/bi";
 
-const UserRow = ({ user, openModal, setOpenModal, setOpenAddUser }) => {
-  const { name, email, phone, city, employment, department } = user;
+const UserRow = ({
+  user,
+  openModal,
+  setOpenModal,
+  setOpenAddUser,
+  index,
+  deleteHandler,
+  getUserId,
+}) => {
+  const { id, name, email, phone, city, employment, department } = user;
 
   return (
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
-      <td className="px-6 py-4">1</td>
+      <td className="px-6 py-4">{index + 1}</td>
       <th
         scope="row"
         className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
       >
         <div>
           <div className="text-base font-semibold">{name}</div>
-          <div className="font-normal text-gray-500">{department}r</div>
+          <div className="font-normal text-gray-500">{department}</div>
         </div>
       </th>
-      <td className="px-6 py-4">{email}m</td>
+      <td className="px-6 py-4">{email}</td>
       <td className="px-6 py-4">{employment}</td>
-      <td className="px-6 py-4">{phone}0</td>
+      <td className="px-6 py-4">{phone}</td>
       <td className="px-6 py-4">
         <p>{city}rk</p>
       </td>
       <td
-        className="px-6 py-4"
-        onClick={() => {
+        className="px-6 py-4 text-center text-green-600 hover:text-green-400 cursor-pointer group"
+        onClick={(e) => {
           setOpenModal(!openModal);
           setOpenAddUser(false);
+          getUserId(id);
         }}
       >
-        {/*  Modal toggle  */}
-        <a
-          href="#"
-          type="button"
-          data-modal-show="editUserModal"
-          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-        >
-          Edit user
-        </a>
+        <BiSolidEdit
+          className="group-hover:scale-125 duration-500"
+          size={23}
+          onClick={() => getUserId(id)}
+        />
+      </td>
+      <td
+        className="px-6 py-4 text-center text-red-600 hover:text-red-400 cursor-pointer group"
+        onClick={(e) => deleteHandler(id)}
+      >
+        <TbTrashOff className="group-hover:scale-125 duration-500" size={23} />
       </td>
     </tr>
   );
