@@ -33,29 +33,29 @@ const Table = () => {
 
   return (
     <>
+      <div className="dark:bg-blue-400 p-5 flex justify-between items-center mt-10 bg-gray-700 max-w-7xl mx-auto">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl text-white">
+          User{" "}
+          <span className="text-2xl md:text-3xl lg:text-4xl font-bold ">
+            Management
+          </span>
+        </h1>
+        <button
+          className="bg-white py-3 px-3 md:px-8 rounded flex items-center gap-2 font-bold group"
+          onClick={() => {
+            setOpenAddUser(!openAddUser);
+            setOpenModal(false);
+          }}
+        >
+          {" "}
+          Add User{" "}
+          <AiOutlinePlusCircle
+            size={20}
+            className="group-hover:scale-125 duration-500 group-hover:text-green-700"
+          />
+        </button>
+      </div>
       <div className="relative overflow-x-auto sm:rounded-lg lg:rounded-none max-w-7xl mx-auto h-screen z-20">
-        <div className="dark:bg-blue-400 p-5 flex justify-between items-center mt-10 bg-gray-700">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl text-white">
-            User{" "}
-            <span className="text-2xl md:text-3xl lg:text-4xl font-bold ">
-              Management
-            </span>
-          </h1>
-          <button
-            className="bg-white py-3 px-8 rounded flex items-center gap-2 font-bold group"
-            onClick={() => {
-              setOpenAddUser(!openAddUser);
-              setOpenModal(false);
-            }}
-          >
-            {" "}
-            Add New User{" "}
-            <AiOutlinePlusCircle
-              size={20}
-              className="group-hover:scale-125 duration-500 group-hover:text-green-700"
-            />
-          </button>
-        </div>
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -103,7 +103,7 @@ const Table = () => {
       <EditUser
         openModal={openModal}
         setOpenModal={setOpenModal}
-        id={userId}
+        userId={userId}
         setUserId={setUserId}
         getUsers={getUsers}
       />

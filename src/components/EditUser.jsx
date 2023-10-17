@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import CrudOperation from "../services/CrudOperation";
 import toast from "react-hot-toast";
 
-const EditUser = ({ openModal, setOpenModal, id, setUserId, getUsers }) => {
+const EditUser = ({ openModal, setOpenModal, userId, setUserId, getUsers }) => {
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -13,10 +13,10 @@ const EditUser = ({ openModal, setOpenModal, id, setUserId, getUsers }) => {
   });
 
   useEffect(() => {
-    if (id !== undefined && id !== "") {
+    if (userId !== undefined && userId !== "") {
       const handleUserData = async () => {
         try {
-          const userData = await CrudOperation.getUserById(id);
+          const userData = await CrudOperation.getUserById(userId);
           setUser(userData.data());
         } catch (err) {
           toast.error(err.message);
@@ -24,7 +24,7 @@ const EditUser = ({ openModal, setOpenModal, id, setUserId, getUsers }) => {
       };
       handleUserData();
     }
-  }, [id]);
+  }, [userId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,18 +48,16 @@ const EditUser = ({ openModal, setOpenModal, id, setUserId, getUsers }) => {
       employment,
     };
 
-    if (id !== undefined && id !== "") {
-      try {
-        await CrudOperation.updateUser(id, formData);
-        toast.success("User Updated Successfully");
-        form.reset();
-        setOpenModal(false);
-        setUserId("");
+    try {
+      await CrudOperation.updateUser(userId, formData);
+      toast.success("User Updated Successfully");
+      form.reset();
+      setOpenModal(false);
+      setUserId("");
 
-        getUsers();
-      } catch (err) {
-        toast.error(err.message);
-      }
+      getUsers();
+    } catch (err) {
+      toast.error(err.message);
     }
   };
 
