@@ -5,12 +5,14 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import CrudOperation from "../services/CrudOperation";
 import UserRow from "./UserRow";
 import toast from "react-hot-toast";
+import Loader from "./Loader";
 
 const Table = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openAddUser, setOpenAddUser] = useState(false);
   const [users, setUsers] = useState([]);
   const [userId, setUserId] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getUsers();
@@ -19,6 +21,7 @@ const Table = () => {
   const getUsers = async () => {
     const data = await CrudOperation.getAllUsers();
     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setLoading(false);
   };
 
   const deleteHandler = async (id) => {
@@ -30,6 +33,10 @@ const Table = () => {
   const userIdHandler = (id) => {
     setUserId(id);
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
