@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.fade-in-top-slow {
+  transition: opacity 1s, max-height 1s, transform 1s;
+  transition-timing-function: ease-in-out;
+  transform: translateY(-150px);
+  transform-origin: top;
+  display: block;
+  will-change: opacity, transform, max-height;
+  max-height: 100%; /* Adjust the max-height to your preferred value */
+  opacity: 0;
+}
+
+.fade-in-top-slow.active {
+  max-height: 100%; /* Adjust the max-height to your preferred value */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-out-top-slow {
+  transition: opacity 1s, max-height 1s, transform 1s;
+  transition-timing-function: ease-in-out;
+  display: block;
+  will-change: opacity, transform, max-height;
+  max-height: 0;
+  opacity: 0;
+}
+
+.fade-out-top-slow.active {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-150px);
+}
