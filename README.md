@@ -25,33 +25,33 @@ This project demonstrates Firebase's capabilities for Create, Read, Update, and 
    ```bash
    git clone https://github.com/your-username/firebase-crud-react.git
 
-   Navigate to the project directory:
-   cd firebase-crud-react
+Navigate to the project directory:
+cd firebase-crud-react
 
-   Install dependencies
-   npm install
+Install dependencies
+npm install
 
-   Create a Firebase project and set up a Firebase Realtime Database. Update your Firebase configuration in the project.
-   
-   Start the development server:
-   npm start
+Create a Firebase project and set up a Firebase Realtime Database. Update your Firebase configuration in the project.
 
-   Open your browser and navigate to http://localhost:3000 to access the CRUD application.
+Start the development server:
+npm start
 
-    Usage
-    Create: Add a new user by filling in the required details and clicking the "Add User" button.
+Open your browser and navigate to http://localhost:3000 to access the CRUD application.
 
-    Read: View the list of users, including their information, in the user interface.
+Usage
+Create: Add a new user by filling in the required details and clicking the "Add User" button.
 
-    Update: Edit user details by clicking the "Edit" button, making the necessary changes, and clicking "Update."
+Read: View the list of users, including their information, in the user interface.
 
-    Delete: Remove a user from the list by clicking the "Delete" button. A confirmation prompt will appear.
+Update: Edit user details by clicking the "Edit" button, making the necessary changes, and clicking "Update."
 
-    Contributions
-    Contributions are welcome! Feel free to open issues and pull requests to improve this project.
+Delete: Remove a user from the list by clicking the "Delete" button. A confirmation prompt will appear.
 
-    License
-    This project is licensed under the MIT License - see the LICENSE file for details.
+Contributions
+Contributions are welcome! Feel free to open issues and pull requests to improve this project.
 
-    Acknowledgments
-    Thanks to Firebase for providing a robust and easy-to-use real-time database for this project.
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+Acknowledgments
+Thanks to Firebase for providing a robust and easy-to-use real-time database for this project.
