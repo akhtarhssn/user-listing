@@ -69,6 +69,9 @@ const Table = () => {
                 Email
               </th>
               <th scope="col" className="px-6 py-3">
+                age
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Employment
               </th>
               <th scope="col" className="px-6 py-3">

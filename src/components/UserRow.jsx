@@ -11,7 +11,7 @@ const UserRow = ({
   deleteHandler,
   getUserId,
 }) => {
-  const { id, name, email, phone, city, employment, department } = user;
+  const { id, name, email, phone, city, employment, age } = user;
 
   return (
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
@@ -22,14 +22,14 @@ const UserRow = ({
       >
         <div>
           <div className="text-base font-semibold">{name}</div>
-          <div className="font-normal text-gray-500">{department}</div>
         </div>
       </th>
       <td className="px-6 py-4">{email}</td>
+      <td className="px-6 py-4">{age}</td>
       <td className="px-6 py-4">{employment}</td>
       <td className="px-6 py-4">{phone}</td>
       <td className="px-6 py-4">
-        <p>{city}rk</p>
+        <p>{city}</p>
       </td>
       <td
         className="px-6 py-4 text-center text-green-600 hover:text-green-400 cursor-pointer group"
